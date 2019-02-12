@@ -7,14 +7,15 @@
 `docker run -ti --rm vault_seed_recover`
 
 ## Description
-Master Seed Root Key is provided in xprv format (index=0).
-In can be used as input in tools such as: https://iancoleman.io/bip39/
+Master Seed Root Key is provided in xprv format.
+It can be used as input in tools such as: https://iancoleman.io/bip39/
 
 Bitcoin account #0 is also provided for convenience, it can be used in tools such as https://electrum.org/ (Standard Wallet > Use a master key).
 
-Note: Ledger vault derives a 512bits seed for the different shared owners seed. Due to how bip39 is designed it is not possible to go from a seed to its mnemonic representation.
+Note: Ledger vault derives a 512bits seed from shared owners seed fragments. Due to how bip39 is designed it is not possible to go from a seed to its mnemonic representation. As a consequence it is not possible to import this seed in a Ledger Nano S/X.
 
 ![Bip39 Bip32 Seed](Bip39-Bip32-seed.png)
+
 ![Vault Master Seed Derivation](Vault-Master-Seed.png)
 
 
