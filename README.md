@@ -4,7 +4,7 @@
 `docker build -t vault_seed_recovery .`
 
 ## Execute
-`docker run -ti --rm vault_seed_recover`
+`docker run -ti --rm vault_seed_recovery`
 
 ## Description
 Master Seed Root Key is provided in xprv format.
