@@ -1,9 +1,7 @@
 from functools import reduce
 from itertools import count
 
-from bip_utils import Bip32Secp256k1
-from mnemonic.mnemonic import Mnemonic
-
+from bip_utils import Bip39MnemonicValidator, Bip32Secp256k1, Bip39SeedGenerator
 
 VAULT_BIP32_PATH = "m/5655636'/4932953'"
 
@@ -14,21 +12,20 @@ def xor(*argv):
 
 def ask_seeds() -> list[bytes]:
     components = []
-    m = Mnemonic("english")
-
     print(
         "Input each Shared Owner recovery mnemonic (24 words) when requested. End with an empty line."
     )
     for i in count():
         while True:
             words = input(f"Shared Owner {i + 1} recovery mnemonic: ")
-            if len(words) == 0 or m.check(words):
+            if len(words) == 0 or Bip39MnemonicValidator().IsValid(words):
                 break
             print("Invalid 24 words")
         if len(words) == 0:
             break
 
-        bip32_key = Bip32Secp256k1.FromSeedAndPath(m.to_seed(words), VAULT_BIP32_PATH)
+        seed = Bip39SeedGenerator(words).Generate()
+        bip32_key = Bip32Secp256k1.FromSeedAndPath(seed, VAULT_BIP32_PATH)
         private_key = bip32_key.PrivateKey().Raw().ToBytes()
         chain_code = bip32_key.ChainCode().ToBytes()
         components.append(private_key + chain_code)
